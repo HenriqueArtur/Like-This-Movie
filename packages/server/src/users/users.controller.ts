@@ -1,11 +1,11 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
-import { UsersService } from './services/users.service';
+import { Body, Controller, Post } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { User } from './user.model';
+import { UserMongoService } from './services/mongo-user.service';
+import { User } from './interfaces/user.interface';
 
 @Controller('users')
 export class UsersController {
-  constructor(@Inject('UsersService') private userService: UsersService) {}
+  constructor(private userService: UserMongoService) {}
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {
