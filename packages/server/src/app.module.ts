@@ -15,7 +15,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       useFactory: async (configService: ConfigService) => {
         return {
           uri: configService.get<string>(`MONGO_CONNECTION`),
-          ...(process.env.NODE_ENV == 'PROD'
+          ...(process.env.NODE_ENV == 'DEV'
             ? { dbName: configService.get<string>(`MONGO_DB_NAME`) }
             : {}),
         };
