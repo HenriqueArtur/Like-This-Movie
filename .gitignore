@@ -18,3 +18,6 @@ logs/
 # Ignore build artifacts
 *.swp
 .DS_Store
+
+# Ignore Secrets
+**/.env
