@@ -7,10 +7,10 @@ export type UserDocument = HydratedDocument<Omit<User, 'id'>>;
 
 @Schema()
 export class UserMongo {
-  @Prop()
+  @Prop({ required: true, index: true, unique: true })
   login: string;
 
-  @Prop()
+  @Prop({ required: true })
   password: string;
 }
 
