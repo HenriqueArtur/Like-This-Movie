@@ -35,7 +35,6 @@ describe('UserMongoService', () => {
       const saveSpy = jest.spyOn(service, 'create').mockResolvedValueOnce({
         id,
         login,
-        password,
       });
 
       const result = await service.create(doc);
@@ -44,7 +43,6 @@ describe('UserMongoService', () => {
       expect(result).toEqual({
         id,
         login,
-        password,
       });
     });
   });

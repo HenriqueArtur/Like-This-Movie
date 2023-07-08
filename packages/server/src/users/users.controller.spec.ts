@@ -40,7 +40,6 @@ describe('UsersController', () => {
       const createdUser: User = {
         id,
         login,
-        password,
       };
 
       jest.spyOn(userService, 'create').mockResolvedValueOnce(createdUser);

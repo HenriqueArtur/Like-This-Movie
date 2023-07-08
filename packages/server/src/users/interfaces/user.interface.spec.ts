@@ -6,11 +6,9 @@ describe('User interface', () => {
     const user: User = {
       id: faker.string.uuid(),
       login: faker.internet.email(),
-      password: faker.internet.password(),
     };
 
     expect(user.id).toBeDefined();
     expect(user.login).toBeDefined();
-    expect(user.password).toBeDefined();
   });
 });

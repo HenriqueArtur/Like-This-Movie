@@ -15,7 +15,6 @@ export class UserMongoService {
     return {
       id: result.id,
       login: result.login,
-      password: result.password,
     };
   }
 }
