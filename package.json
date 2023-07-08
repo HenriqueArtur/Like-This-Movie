@@ -1,0 +1,20 @@
+{
+  "name": "like-this-movie",
+  "version": "0.0.1",
+  "private": true,
+  "license": "UNLICENSED",
+  "author": {
+    "name": "Henrique Artur",
+    "email": "contato@henriqueartur.com",
+    "url": "https://henriqueartur.com/"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}

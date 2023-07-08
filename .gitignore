@@ -1,0 +1,20 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore NestJS output directories
+/packages/*/dist/
+/packages/*/dist-server/
+
+# Ignore Angular output directories
+/packages/*/dist-client/
+
+# Ignore environment files
+/packages/*/.*.env
+
+# Ignore logs
+logs/
+*.log
+
+# Ignore build artifacts
+*.swp
+.DS_Store
