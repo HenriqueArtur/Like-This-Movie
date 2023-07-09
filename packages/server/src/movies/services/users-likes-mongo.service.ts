@@ -11,15 +11,15 @@ export class UsersLikesMongoService {
     private readonly movieModel: Model<UsersLikesModel>,
   ) {}
 
-  async findBy(userId: string, moviesIds: number[]): Promise<UsersLikesDto[]> {
+  async findBy(userId: string, tmdbIds: number[]): Promise<UsersLikesDto[]> {
     const existingMovies = await this.movieModel.find({
       user_id: userId,
-      movie_id: { $in: moviesIds },
+      tmdb_id: { $in: tmdbIds },
     });
     return existingMovies.map((like) => ({
       id: like.id,
       user_id: like.user_id,
-      movie_id: like.movie_id,
+      tmdb_id: like.tmdb_id,
     }));
   }
 }

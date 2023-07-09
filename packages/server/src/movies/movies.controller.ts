@@ -26,7 +26,7 @@ export class MoviesController {
       this.moviesService.findOrCreateByTmdbIds(idsToFetch),
       this.usersLikesService.findBy(userId, idsToFetch),
     ]);
-    const userLikesIds = userLikes.map((l) => l.movie_id);
+    const userLikesIds = userLikes.map((l) => l.tmdb_id);
     return top10fieldsFormatted.map((m) => {
       const movieInApp = moviesLike.find((ml) => ml.tmdb_id == m.id);
       return {
@@ -34,7 +34,7 @@ export class MoviesController {
         tmdb_id: m.id,
         id: movieInApp.id,
         likes: movieInApp.likes,
-        userLiked: !!userLikesIds.includes(movieInApp.id),
+        userLiked: !!userLikesIds.includes(movieInApp.tmdb_id),
       };
     });
   }

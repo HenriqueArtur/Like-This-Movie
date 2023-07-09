@@ -6,7 +6,7 @@ export class UsersLikesModel {
   user_id: string;
 
   @Prop({ required: true })
-  movie_id: string;
+  tmdb_id: number;
 }
 
 export const UsersLikesSchema = SchemaFactory.createForClass(UsersLikesModel);
