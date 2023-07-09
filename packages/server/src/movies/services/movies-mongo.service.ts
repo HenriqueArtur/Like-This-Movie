@@ -18,10 +18,10 @@ export class MoviesMongoService {
     const missingTmdbIdsPromise = tmdbIds
       .filter((tmdbId) => !existingTmdbIds.includes(tmdbId))
       .map((tmdb_id) =>
-        new this.movieModel({
+        this.movieModel.create({
           tmdb_id,
           likes: 0,
-        }).save(),
+        }),
       );
     const newMovies = await Promise.all(missingTmdbIdsPromise);
     return [...existingMovies, ...newMovies].map((movieMongo) => ({
@@ -32,10 +32,10 @@ export class MoviesMongoService {
   }
 
   async updateLikes(
-    id: string,
+    tmdbId: number,
     operation: 'SUM' | 'SUBTRACT' = 'SUM',
   ): Promise<Movie> {
-    const movieDoc = await this.movieModel.findById(id);
+    const movieDoc = await this.movieModel.findOne({ tmdb_id: tmdbId });
     movieDoc.likes = movieDoc.likes + (operation == 'SUM' ? 1 : -1);
     await movieDoc.save();
     return {

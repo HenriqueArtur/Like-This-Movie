@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Model } from 'mongoose';
 import { MoviesMongoService } from './movies-mongo.service';
 import { MovieModel } from '../models/movie.model';
+import { faker } from '@faker-js/faker';
 
 describe('MoviesMongoService', () => {
   let service: MoviesMongoService;
@@ -18,6 +19,7 @@ describe('MoviesMongoService', () => {
             find: jest.fn(),
             findById: jest.fn(),
             create: jest.fn(),
+            findOne: jest.fn(),
           },
         },
       ],
@@ -58,7 +60,7 @@ describe('MoviesMongoService', () => {
 
   describe('updateLikes', () => {
     it('should update the likes of a movie', async () => {
-      const movieId = '1';
+      const movieId = faker.number.int();
       const movieDoc = {
         tmdb_id: 123,
         likes: 5,
@@ -84,7 +86,7 @@ describe('MoviesMongoService', () => {
     });
 
     it('should subtract the likes of a movie', async () => {
-      const movieId = '1';
+      const movieId = faker.number.int();
       const movieDoc = {
         id: movieId,
         tmdb_id: 123,
