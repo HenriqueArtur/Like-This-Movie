@@ -26,5 +26,15 @@ describe('TmdbMovieDto interface', () => {
     expect(tmdbMovieDto.title).toBeDefined();
     expect(tmdbMovieDto.original_title).toBeDefined();
     expect(tmdbMovieDto.poster_path).toBeDefined();
+    expect(tmdbMovieDto.adult).toBeDefined();
+    expect(tmdbMovieDto.original_language).toBeDefined();
+    expect(tmdbMovieDto.overview).toBeDefined();
+    expect(tmdbMovieDto.media_type).toBeDefined();
+    expect(tmdbMovieDto.genre_ids).toBeDefined();
+    expect(tmdbMovieDto.popularity).toBeDefined();
+    expect(tmdbMovieDto.release_date).toBeDefined();
+    expect(tmdbMovieDto.video).toBeDefined();
+    expect(tmdbMovieDto.vote_average).toBeDefined();
+    expect(tmdbMovieDto.vote_count).toBeDefined();
   });
 });
