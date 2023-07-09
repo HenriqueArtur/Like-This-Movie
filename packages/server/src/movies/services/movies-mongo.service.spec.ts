@@ -20,6 +20,7 @@ describe('MoviesMongoService', () => {
             findById: jest.fn(),
             create: jest.fn(),
             findOne: jest.fn(),
+            save: jest.fn(),
           },
         },
       ],
@@ -31,15 +32,26 @@ describe('MoviesMongoService', () => {
 
   describe('findOrCreateByTmdbIds', () => {
     it('should find existing movies and create new movies', async () => {
-      const existingMovies: MovieModel[] = [
-        { tmdb_id: 123, likes: 5 },
-        { tmdb_id: 456, likes: 10 },
+      const idsMock = [
+        faker.number.int(),
+        faker.number.int(),
+        faker.number.int(),
       ];
-      const tmdbIds: number[] = [123, 456, 789];
+      const tmdbMockIds = [
+        faker.number.int(),
+        faker.number.int(),
+        faker.number.int(),
+      ];
+      const existingMovies = [
+        { id: idsMock[0], tmdb_id: tmdbMockIds[0], likes: 5 },
+        { id: idsMock[1], tmdb_id: tmdbMockIds[1], likes: 10 },
+      ];
+      const tmdbIds: number[] = tmdbMockIds;
 
       jest.spyOn(model, 'find').mockResolvedValue(existingMovies);
       jest.spyOn(model, 'create').mockResolvedValueOnce({
-        tmdb_id: 789,
+        id: idsMock[2],
+        tmdb_id: tmdbMockIds[2],
         likes: 0,
       } as any);
 
@@ -47,13 +59,13 @@ describe('MoviesMongoService', () => {
 
       expect(model.find).toHaveBeenCalledWith({ tmdb_id: { $in: tmdbIds } });
       expect(model.create).toHaveBeenCalledWith({
-        tmdb_id: 789,
+        tmdb_id: tmdbMockIds[2],
         likes: 0,
       });
       expect(result).toEqual([
-        { id: '1', tmdb_id: 123, likes: 5 },
-        { id: '2', tmdb_id: 456, likes: 10 },
-        { id: '3', tmdb_id: 789, likes: 0 },
+        { id: idsMock[0], tmdb_id: tmdbMockIds[0], likes: 5 },
+        { id: idsMock[1], tmdb_id: tmdbMockIds[1], likes: 10 },
+        { id: idsMock[2], tmdb_id: tmdbMockIds[2], likes: 0 },
       ]);
     });
   });
@@ -61,53 +73,56 @@ describe('MoviesMongoService', () => {
   describe('updateLikes', () => {
     it('should update the likes of a movie', async () => {
       const movieId = faker.number.int();
+      const tmdbId = faker.number.int();
       const movieDoc = {
-        tmdb_id: 123,
+        id: movieId,
+        tmdb_id: tmdbId,
         likes: 5,
-        save: jest.fn().mockResolvedValue({
+        save: jest.fn().mockImplementationOnce(() => ({
           id: movieId,
-          tmdb_id: 123,
+          tmdb_id: tmdbId,
           likes: 6,
-        }),
+        })),
       };
 
-      jest.spyOn(model, 'findById').mockResolvedValue(movieDoc);
+      jest.spyOn(model, 'findOne').mockResolvedValue(movieDoc);
 
-      const result = await service.updateLikes(movieId, 'SUM');
+      const result = await service.updateLikes(tmdbId, 'SUM');
 
-      expect(model.findById).toHaveBeenCalledWith(movieId);
+      expect(model.findOne).toHaveBeenCalledWith({ tmdb_id: tmdbId });
       expect(movieDoc.likes).toBe(6);
       expect(movieDoc.save).toHaveBeenCalled();
       expect(result).toEqual({
         id: movieId,
-        tmdb_id: 123,
+        tmdb_id: tmdbId,
         likes: 6,
       });
     });
 
     it('should subtract the likes of a movie', async () => {
       const movieId = faker.number.int();
+      const tmdbId = faker.number.int();
       const movieDoc = {
         id: movieId,
-        tmdb_id: 123,
+        tmdb_id: tmdbId,
         likes: 5,
         save: jest.fn().mockResolvedValue({
           id: movieId,
-          tmdb_id: 123,
+          tmdb_id: tmdbId,
           likes: 4,
         }),
       };
 
-      jest.spyOn(model, 'findById').mockResolvedValue(movieDoc);
+      jest.spyOn(model, 'findOne').mockResolvedValue(movieDoc);
 
-      const result = await service.updateLikes(movieId, 'SUBTRACT');
+      const result = await service.updateLikes(tmdbId, 'SUBTRACT');
 
-      expect(model.findById).toHaveBeenCalledWith(movieId);
+      expect(model.findOne).toHaveBeenCalledWith({ tmdb_id: tmdbId });
       expect(movieDoc.likes).toBe(4);
       expect(movieDoc.save).toHaveBeenCalled();
       expect(result).toEqual({
         id: movieId,
-        tmdb_id: 123,
+        tmdb_id: tmdbId,
         likes: 4,
       });
     });
