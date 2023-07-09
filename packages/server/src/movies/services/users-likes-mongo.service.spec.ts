@@ -17,6 +17,9 @@ describe('UsersLikesMongoService', () => {
           provide: getModelToken('UserLike'),
           useValue: {
             find: jest.fn(),
+            findOne: jest.fn(),
+            create: jest.fn(),
+            findOneAndDelete: jest.fn(),
           },
         },
       ],
@@ -81,6 +84,76 @@ describe('UsersLikesMongoService', () => {
       });
 
       expect(result).toEqual([]);
+    });
+  });
+
+  describe('findByTmdbId', () => {
+    it('should find a user like by tmdb ID', async () => {
+      const tmdbId = faker.number.int();
+      const userLike = {
+        id: faker.database.mongodbObjectId(),
+        user_id: faker.database.mongodbObjectId(),
+        tmdb_id: tmdbId,
+      };
+
+      jest.spyOn(model, 'findOne').mockResolvedValue(userLike);
+
+      const result = await service.findByTmdbId(tmdbId);
+
+      expect(model.findOne).toHaveBeenCalledWith({
+        tmdb_id: tmdbId,
+      });
+
+      expect(result).toEqual(userLike);
+    });
+
+    it('should return undefined if no user like is found', async () => {
+      const tmdbId = faker.number.int();
+
+      jest.spyOn(model, 'findOne').mockResolvedValue(null);
+
+      const result = await service.findByTmdbId(tmdbId);
+
+      expect(model.findOne).toHaveBeenCalledWith({
+        tmdb_id: tmdbId,
+      });
+
+      expect(result).toBeUndefined();
+    });
+  });
+
+  describe('create', () => {
+    it('should create a user like', async () => {
+      const userId = faker.database.mongodbObjectId();
+      const tmdbId = faker.number.int();
+      const createdLike = {
+        id: faker.database.mongodbObjectId(),
+        user_id: userId,
+        tmdb_id: tmdbId,
+      };
+
+      jest.spyOn(model, 'create').mockResolvedValue(createdLike as any);
+
+      const result = await service.create(userId, tmdbId);
+
+      expect(model.create).toHaveBeenCalledWith({
+        user_id: userId,
+        tmdb_id: tmdbId,
+      });
+
+      expect(result).toEqual(createdLike);
+    });
+  });
+
+  describe('deleteByTmdbId', () => {
+    it('should delete a user like by tmdb ID', async () => {
+      const tmdbId = faker.number.int();
+
+      await service.deleteByTmdbId(tmdbId);
+
+      expect(model.findOneAndDelete).toHaveBeenCalledWith({
+        tmdb_id: tmdbId,
+      });
     });
   });
 });
