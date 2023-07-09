@@ -5,6 +5,7 @@ import { TmdbDomainService } from './services/tmdb-domain.service';
 import { MoviesMongoService } from './services/movies-mongo.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { UsersLikesMongoService } from './services/users-likes-mongo.service';
 
 describe('MoviesController', () => {
   let controller: MoviesController;
@@ -16,8 +17,13 @@ describe('MoviesController', () => {
         TmdbApiService,
         TmdbDomainService,
         MoviesMongoService,
+        UsersLikesMongoService,
         {
           provide: getModelToken('Movie'),
+          useValue: Model,
+        },
+        {
+          provide: getModelToken('UserLike'),
           useValue: Model,
         },
       ],
