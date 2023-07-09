@@ -22,4 +22,36 @@ export class UsersLikesMongoService {
       tmdb_id: like.tmdb_id,
     }));
   }
+
+  async findByTmdbId(tmdbId: number): Promise<UsersLikesDto | undefined> {
+    const like = await this.movieModel.findOne({
+      tmdb_id: tmdbId,
+    });
+    if (!like) {
+      return undefined;
+    }
+    return {
+      id: like.id,
+      user_id: like.user_id,
+      tmdb_id: like.tmdb_id,
+    };
+  }
+
+  async create(userId: string, tmdbId: number): Promise<UsersLikesDto> {
+    const like = await new this.movieModel({
+      user_id: userId,
+      tmdb_id: tmdbId,
+    }).save();
+    return {
+      id: like.id,
+      user_id: like.user_id,
+      tmdb_id: like.tmdb_id,
+    };
+  }
+
+  async deleteByTmdbId(tmdbId: number): Promise<void> {
+    await this.movieModel.findOneAndDelete({
+      tmdb_id: tmdbId,
+    });
+  }
 }
