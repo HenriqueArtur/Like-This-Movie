@@ -21,3 +21,6 @@ logs/
 
 # Ignore Secrets
 **/.env
+
+# Ignore IDE's files
+.vscode/settings.json
