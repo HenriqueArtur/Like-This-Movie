@@ -7,18 +7,18 @@ import { Movie } from '../dto/movie.dto';
 @Injectable()
 export class MoviesMongoService {
   constructor(
-    @InjectModel('Movie') private readonly userModel: Model<MovieModel>,
+    @InjectModel('Movie') private readonly movieModel: Model<MovieModel>,
   ) {}
 
   async findOrCreateByTmdbIds(tmdbIds: number[]): Promise<Movie[]> {
-    const existingMovies = await this.userModel.find({
+    const existingMovies = await this.movieModel.find({
       tmdb_id: { $in: tmdbIds },
     });
     const existingTmdbIds = existingMovies.map((movie) => movie.tmdb_id);
     const missingTmdbIdsPromise = tmdbIds
       .filter((tmdbId) => !existingTmdbIds.includes(tmdbId))
       .map((tmdb_id) =>
-        new this.userModel({
+        new this.movieModel({
           tmdb_id,
           likes: 0,
         }).save(),
@@ -35,7 +35,7 @@ export class MoviesMongoService {
     id: string,
     operation: 'SUM' | 'SUBTRACT' = 'SUM',
   ): Promise<Movie> {
-    const movieDoc = await this.userModel.findById(id);
+    const movieDoc = await this.movieModel.findById(id);
     movieDoc.likes = movieDoc.likes + (operation == 'SUM' ? 1 : -1);
     await movieDoc.save();
     return {
