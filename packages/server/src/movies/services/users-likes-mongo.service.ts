@@ -38,10 +38,10 @@ export class UsersLikesMongoService {
   }
 
   async create(userId: string, tmdbId: number): Promise<UsersLikesDto> {
-    const like = await new this.movieModel({
+    const like = await this.movieModel.create({
       user_id: userId,
       tmdb_id: tmdbId,
-    }).save();
+    });
     return {
       id: like.id,
       user_id: like.user_id,
