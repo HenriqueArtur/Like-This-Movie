@@ -25,12 +25,17 @@ export class AccountService {
 
   login(login: string, password: string) {
     return this.http
-      .post<User>(`${environment.apiUrl}/auth/login`, {
+      .post<{ user: any; token: string }>(`${environment.apiUrl}/auth/login`, {
         login,
         password,
       })
       .pipe(
-        map((user) => {
+        map((response) => {
+          const user = {
+            id: response.user.id,
+            login: response.user.login,
+            token: response.token,
+          };
           localStorage.setItem('user', JSON.stringify(user));
           this.userSubject.next(user);
           return user;
@@ -46,12 +51,20 @@ export class AccountService {
 
   register(login: string, password: string) {
     return this.http
-      .post<User>(`${environment.apiUrl}/auth/register`, {
-        login,
-        password,
-      })
+      .post<{ user: any; token: string }>(
+        `${environment.apiUrl}/auth/register`,
+        {
+          login,
+          password,
+        }
+      )
       .pipe(
-        map((user) => {
+        map((response) => {
+          const user = {
+            id: response.user.id,
+            login: response.user.login,
+            token: response.token,
+          };
           localStorage.setItem('user', JSON.stringify(user));
           this.userSubject.next(user);
           return user;
