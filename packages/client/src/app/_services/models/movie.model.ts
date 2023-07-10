@@ -4,7 +4,7 @@ export interface MovieApi {
   title: string;
   original_title: string;
   poster_path: string;
-  tmdb_id: string;
+  tmdb_id: number;
   likes: number;
   userLiked: boolean;
 }

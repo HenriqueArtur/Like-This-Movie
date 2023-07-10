@@ -33,10 +33,23 @@ export class MoviesService {
                 title: m.title,
                 likes: m.likes,
                 isLiked: m.userLiked,
+                tmdb_id: m.tmdb_id,
                 imagePath: `${TMDB_IMG_ROOT_PATH}${m.poster_path}`,
               } as Movie)
           );
         })
       );
+  }
+
+  like(tmdb_id: number) {
+    return this.http.post<null>(
+      `${environment.apiUrl}/movies/toggle-like/${tmdb_id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${this.accountService.userValue?.token}`,
+        },
+      }
+    );
   }
 }

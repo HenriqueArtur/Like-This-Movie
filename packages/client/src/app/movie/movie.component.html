@@ -8,7 +8,7 @@
       class="like-button"
       [class.liked]="movie.isLiked"
       [class.not-liked]="!movie.isLiked"
-      (click)="toggleLike($event)">
+      (click)="toggleLike()">
       <mat-icon>{{ movie.isLiked ? 'favorite' : 'favorite_border' }}</mat-icon>
     </button>
   </div>

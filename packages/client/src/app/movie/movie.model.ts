@@ -4,5 +4,6 @@ export interface Movie {
   title: string;
   likes: number;
   isLiked: boolean;
+  tmdb_id: number;
   imagePath: string;
 }
