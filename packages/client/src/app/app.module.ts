@@ -19,21 +19,19 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MovieComponent } from './movie/movie.component';
-import { MoviePageComponent } from './movie-page/movie-page.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { HttpClientModule } from '@angular/common/http';
 import { HomePageComponent } from './home-page/home-page.component';
-import { HeaderComponent } from './header/header.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { TrendingPageComponent } from './trending-page/trending-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MovieComponent,
-    MoviePageComponent,
     HomePageComponent,
-    HeaderComponent,
     NavMenuComponent,
+    TrendingPageComponent,
   ],
   imports: [
     BrowserModule,
