@@ -1,0 +1,13 @@
+<mat-card class="card">
+  <div class="poster">
+    <div class="position">#{{ movie.position }}</div>
+    <img mat-card-image [src]="movie.imagePath" alt="Movie Poster" />
+    <button mat-icon-button class="like-button" (click)="toggleLike()">
+      <mat-icon>{{ movie.isLiked ? 'favorite' : 'favorite_border' }}</mat-icon>
+    </button>
+  </div>
+  <mat-card-content>
+    <h4 class="title">{{ movie.title }}</h4>
+    <p class="likes">Likes: {{ movie.likes }}</p>
+  </mat-card-content>
+</mat-card>
