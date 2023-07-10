@@ -32,7 +32,7 @@ export class UserMongoService {
       throw new HttpException('user doesnt exists', HttpStatus.BAD_REQUEST);
     }
     if (await compare(password, user.password)) {
-      return { login: user.login };
+      return { id: user.id, login: user.login };
     } else {
       throw new HttpException('invalid credential', HttpStatus.BAD_REQUEST);
     }
