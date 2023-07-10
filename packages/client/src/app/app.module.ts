@@ -24,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomePageComponent } from './home-page/home-page.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { TrendingPageComponent } from './trending-page/trending-page.component';
+import { LikesPageComponent } from './likes-page/likes-page.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { TrendingPageComponent } from './trending-page/trending-page.component';
     HomePageComponent,
     NavMenuComponent,
     TrendingPageComponent,
+    LikesPageComponent,
   ],
   imports: [
     BrowserModule,

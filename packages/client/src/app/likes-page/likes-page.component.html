@@ -1,0 +1,8 @@
+<app-nav-menu>
+  <h1>Mais curtidos</h1>
+  <div class="movies-container">
+    <div class="movies-container-width">
+      <app-movie *ngFor="let movie of movies" [movie]="movie"></app-movie>
+    </div>
+  </div>
+</app-nav-menu>

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TrendingPageComponent } from './trending-page/trending-page.component';
 import { AuthGuard } from './_helpers/auth.guard';
 import { HomePageComponent } from './home-page/home-page.component';
+import { LikesPageComponent } from './likes-page/likes-page.component';
 
 const routes: Routes = [
   {
@@ -10,7 +11,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: 'pt-BR-trending', component: TrendingPageComponent },
-      { path: 'most-liked', component: TrendingPageComponent },
+      { path: 'most-liked', component: LikesPageComponent },
     ],
   },
   {
