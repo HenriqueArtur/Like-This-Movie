@@ -23,8 +23,12 @@ export class UsersLikesMongoService {
     }));
   }
 
-  async findByTmdbId(tmdbId: number): Promise<UsersLikesDto | undefined> {
+  async findByTmdbId(
+    userId: string,
+    tmdbId: number,
+  ): Promise<UsersLikesDto | undefined> {
     const like = await this.movieModel.findOne({
+      user_id: userId,
       tmdb_id: tmdbId,
     });
     if (!like) {
