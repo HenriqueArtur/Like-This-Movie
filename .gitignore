@@ -55,7 +55,7 @@ logs/
 .history/*
 
 # Miscellaneous
-**/.angular/cache/**
+packages/client/.angular/cache
 **/.sass-cache/
 **/connect.lock
 **/coverage
