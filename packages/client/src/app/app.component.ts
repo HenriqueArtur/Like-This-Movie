@@ -5,11 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass'],
 })
-export class AppComponent {
-  title = 'Like This Movie';
-  public isAuthenticated = false;
-
-  public logout(): void {
-    // todo
-  }
-}
+export class AppComponent {}

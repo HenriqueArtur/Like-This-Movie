@@ -22,9 +22,17 @@ import { MovieComponent } from './movie/movie.component';
 import { MoviePageComponent } from './movie-page/movie-page.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { HttpClientModule } from '@angular/common/http';
+import { HomePageComponent } from './home-page/home-page.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
-  declarations: [AppComponent, MovieComponent, MoviePageComponent],
+  declarations: [
+    AppComponent,
+    MovieComponent,
+    MoviePageComponent,
+    HomePageComponent,
+    HeaderComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
