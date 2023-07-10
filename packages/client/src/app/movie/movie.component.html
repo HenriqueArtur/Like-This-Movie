@@ -2,7 +2,13 @@
   <div class="poster">
     <div class="position">#{{ movie.position }}</div>
     <img mat-card-image [src]="movie.imagePath" alt="Movie Poster" />
-    <button mat-icon-button class="like-button" (click)="toggleLike()">
+    <button
+      id="movie.id"
+      mat-icon-button
+      class="like-button"
+      [class.liked]="movie.isLiked"
+      [class.not-liked]="!movie.isLiked"
+      (click)="toggleLike($event)">
       <mat-icon>{{ movie.isLiked ? 'favorite' : 'favorite_border' }}</mat-icon>
     </button>
   </div>

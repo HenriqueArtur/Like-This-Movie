@@ -9,7 +9,8 @@ import { Movie } from './movie.model';
 export class MovieComponent {
   @Input() movie!: Movie;
 
-  toggleLike() {
-    console.debug('pressed');
+  toggleLike(event: any) {
+    this.movie.likes = this.movie.likes + (this.movie.isLiked ? -1 : 1);
+    this.movie.isLiked = !this.movie.isLiked;
   }
 }
