@@ -8,13 +8,16 @@ import { MoviesModule } from './movies/movies.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: [process.env.NODE_ENV == 'PROD' ? '.prod.env' : '.dev.env'],
+      envFilePath: [process.env.NODE_ENV == 'DEV' ? '.dev.env' : '.env'],
+      isGlobal: true,
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         return {
-          uri: configService.get<string>(`MONGO_CONNECTION`),
+          uri:
+            configService.get<string>(`MONGO_CONNECTION`) ??
+            process.env.MONGO_CONNECTION,
           ...(process.env.NODE_ENV == 'DEV'
             ? { dbName: configService.get<string>(`MONGO_DB_NAME`) }
             : {}),
