@@ -24,6 +24,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { HttpClientModule } from '@angular/common/http';
 import { HomePageComponent } from './home-page/home-page.component';
 import { HeaderComponent } from './header/header.component';
+import { NavMenuComponent } from './nav-menu/nav-menu.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { HeaderComponent } from './header/header.component';
     MoviePageComponent,
     HomePageComponent,
     HeaderComponent,
+    NavMenuComponent,
   ],
   imports: [
     BrowserModule,
