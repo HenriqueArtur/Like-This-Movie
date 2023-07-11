@@ -90,17 +90,19 @@ describe('UsersLikesMongoService', () => {
   describe('findByTmdbId', () => {
     it('should find a user like by tmdb ID', async () => {
       const tmdbId = faker.number.int();
+      const userId = faker.database.mongodbObjectId();
       const userLike = {
         id: faker.database.mongodbObjectId(),
-        user_id: faker.database.mongodbObjectId(),
+        user_id: userId,
         tmdb_id: tmdbId,
       };
 
       jest.spyOn(model, 'findOne').mockResolvedValue(userLike);
 
-      const result = await service.findByTmdbId(tmdbId);
+      const result = await service.findByTmdbId(userId, tmdbId);
 
       expect(model.findOne).toHaveBeenCalledWith({
+        user_id: userId,
         tmdb_id: tmdbId,
       });
 
@@ -109,12 +111,14 @@ describe('UsersLikesMongoService', () => {
 
     it('should return undefined if no user like is found', async () => {
       const tmdbId = faker.number.int();
+      const userId = faker.database.mongodbObjectId();
 
       jest.spyOn(model, 'findOne').mockResolvedValue(null);
 
-      const result = await service.findByTmdbId(tmdbId);
+      const result = await service.findByTmdbId(userId, tmdbId);
 
       expect(model.findOne).toHaveBeenCalledWith({
+        user_id: userId,
         tmdb_id: tmdbId,
       });
 
