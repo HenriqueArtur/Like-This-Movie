@@ -49,6 +49,10 @@ By following Material Design principles, the project aims to provide the followi
 
 By incorporating Material Design guidelines, the project aims to create an interface that not only looks visually appealing but also provides a delightful and engaging user experience.
 
+### 🏠 _Login Page_*
+![login page](images/home.jpg)
+\* _background change by the most trending movie_
+
 ### 🔥 _Trending Page_
 ![trending page](images/trending.jpg)
 
