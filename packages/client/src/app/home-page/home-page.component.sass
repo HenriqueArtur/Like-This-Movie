@@ -1,5 +1,6 @@
 .page-container
   text-align: center
+  min-width: 400px
 
 mat-card
   max-width: 400px
@@ -14,6 +15,39 @@ mat-form-field
   justify-content: flex-end
   gap: 10px
 
-h1
-  color: #673ab7
-  font-size: 48px
+mat-drawer
+  width: 300px
+  padding: 32px
+  background-color: #673ab7
+  height: 100%
+  position: fixed
+
+button
+  width: inherit
+  padding: 24px
+  justify-content: flex-start
+  margin-bottom: 16px
+
+.header-title
+  font-family: 'League Spartan', sans-serif
+  font-weight: 900
+  color: #fff
+  margin-top: 16px
+  margin-bottom: 42px
+  font-size: 42px
+
+.full-w
+  width: -moz-available
+
+.drawer-space
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  height: 100%
+
+mat-drawer-content
+  height: 100vh
+  display: flex
+  justify-content: center
+  align-items: center
+
