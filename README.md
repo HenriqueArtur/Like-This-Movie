@@ -37,7 +37,7 @@ Ensure that the specified software versions are compatible with your operating s
 
 ## 💡 User Interface and User Experience
 
-The project incorporates [Material Design](https://m3.material.io/) guidelines to create an intuitive and visually appealing interface for users. Material Design is a design language developed by Google that focuses on creating a consistent and unified user experience across different platforms and devices.
+The project incorporates _some_ [Material Design](https://m3.material.io/) guidelines to create an intuitive and visually appealing interface for users. Material Design is a design language developed by Google that focuses on creating a consistent and unified user experience across different platforms and devices.
 
 By following Material Design principles, the project aims to provide the following benefits:
 
