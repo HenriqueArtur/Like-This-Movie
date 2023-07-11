@@ -46,6 +46,24 @@ describe('MoviesController', () => {
     );
   });
 
+  describe('mostTrended', () => {
+    it('should return the most trended movie', async () => {
+      const tmdbMovie = TmdbMovieDtoMock();
+      jest
+        .spyOn(tmdbApiService, 'trendingMovies')
+        .mockResolvedValueOnce([tmdbMovie]);
+      jest
+        .spyOn(tmdbDomainService, 'get10MostPopular')
+        .mockReturnValueOnce([tmdbMovie]);
+
+      await controller.mostTrended();
+      expect(tmdbApiService.trendingMovies).toHaveBeenCalled();
+      expect(tmdbDomainService.get10MostPopular).toHaveBeenCalledWith([
+        tmdbMovie,
+      ]);
+    });
+  });
+
   describe('fetchTop10', () => {
     it('should fetch top 10 movies and format the response', async () => {
       const userId = faker.database.mongodbObjectId();
