@@ -25,5 +25,5 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    - run: yarn
-    - run: yarn workspace @ltm/server test
+    - run: cd packages/server/ && yarn
+    - run: yarn test
