@@ -4,6 +4,7 @@ import { TrendingPageComponent } from './trending-page/trending-page.component';
 import { AuthGuard } from './_helpers/auth.guard';
 import { HomePageComponent } from './home-page/home-page.component';
 import { LikesPageComponent } from './likes-page/likes-page.component';
+import { RegisterPageComponent } from './register-page/register-page.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: '',
     component: HomePageComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterPageComponent,
   },
 ];
 

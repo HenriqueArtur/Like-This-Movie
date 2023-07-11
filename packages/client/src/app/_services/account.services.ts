@@ -54,12 +54,7 @@ export class AccountService {
         }
       )
       .pipe(
-        map((response) => {
-          const user = {
-            id: response.user.id,
-            login: response.user.login,
-            token: response.token,
-          };
+        map((user) => {
           localStorage.setItem('user', JSON.stringify(user));
           this.userSubject.next(user);
           return user;

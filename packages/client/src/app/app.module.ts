@@ -25,6 +25,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { TrendingPageComponent } from './trending-page/trending-page.component';
 import { LikesPageComponent } from './likes-page/likes-page.component';
+import { RegisterPageComponent } from './register-page/register-page.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { LikesPageComponent } from './likes-page/likes-page.component';
     NavMenuComponent,
     TrendingPageComponent,
     LikesPageComponent,
+    RegisterPageComponent,
   ],
   imports: [
     BrowserModule,
