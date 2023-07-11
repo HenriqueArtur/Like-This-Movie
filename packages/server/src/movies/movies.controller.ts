@@ -14,6 +14,7 @@ import { MoviesMongoService } from './services/movies-mongo.service';
 import { AuthGuard } from '@nestjs/passport';
 import { UsersLikesMongoService } from './services/users-likes-mongo.service';
 import { Response as Res } from 'express';
+import { Movie } from './dto/movie.dto';
 
 @Controller('movies')
 export class MoviesController {
@@ -24,6 +25,14 @@ export class MoviesController {
     private usersLikesService: UsersLikesMongoService,
   ) {}
 
+  @Get('/most-trended')
+  async mostTrended() {
+    const tmdBrTrendPage1 = await this.tmdbApiService.trendingMovies();
+    const [mostTrended] =
+      this.tmdbDomainService.get10MostPopular(tmdBrTrendPage1);
+    return mostTrended;
+  }
+
   @UseGuards(AuthGuard('jwt'))
   @Get('/')
   async fetchTop10(@Request() req: any) {
@@ -33,7 +42,7 @@ export class MoviesController {
     const top10fieldsFormatted = this.tmdbDomainService.formatToResponse(top10);
     const idsToFetch = top10fieldsFormatted.map((m) => m.id);
     const [moviesLike, userLikes] = await Promise.all([
-      this.moviesService.findOrCreateByTmdbIds(idsToFetch),
+      this.moviesService.findOrCreateByTmdbIds(top10),
       this.usersLikesService.findBy(userId, idsToFetch),
     ]);
     const userLikesIds = userLikes.map((l) => l.tmdb_id);
@@ -45,6 +54,24 @@ export class MoviesController {
         id: movieInApp.id,
         likes: movieInApp.likes,
         userLiked: !!userLikesIds.includes(movieInApp.tmdb_id),
+      };
+    });
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('/most-liked')
+  async fetchTop10MostLiked(@Request() req: any): Promise<Movie[]> {
+    const userId = req.user.id;
+    const movies = await this.moviesService.fetchTop10ByLikes();
+    const userLikes = await this.usersLikesService.findBy(
+      userId,
+      movies.map((m) => m.tmdb_id),
+    );
+    const userLikesIds = userLikes.map((l) => l.tmdb_id);
+    return movies.map((m) => {
+      return {
+        ...m,
+        userLiked: !!userLikesIds.includes(m.tmdb_id),
       };
     });
   }
