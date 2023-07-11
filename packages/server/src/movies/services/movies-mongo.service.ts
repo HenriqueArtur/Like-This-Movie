@@ -49,4 +49,17 @@ export class MoviesMongoService {
       tmdb_obj: movieDoc.tmdb_obj,
     };
   }
+
+  async fetchTop10ByLikes(): Promise<Movie[]> {
+    const movies = await this.movieModel
+      .find({})
+      .sort({ likes: -1, 'tmdb_obj.popularity': -1 })
+      .limit(10);
+    return movies.map((movieMongo) => ({
+      id: movieMongo.id,
+      tmdb_id: movieMongo.tmdb_id,
+      likes: movieMongo.likes,
+      tmdb_obj: movieMongo.tmdb_obj,
+    }));
+  }
 }
