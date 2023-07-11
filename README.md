@@ -49,6 +49,9 @@ By following Material Design principles, the project aims to provide the followi
 
 By incorporating Material Design guidelines, the project aims to create an interface that not only looks visually appealing but also provides a delightful and engaging user experience.
 
+### 🔥 _Trending Page_
+![trending page](images/trending.jpg)
+
 ## 🚀 Installation
 
 Clone the repository.
