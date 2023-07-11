@@ -15,21 +15,11 @@ export class LikesPageComponent {
 
   public ngOnInit(): void {
     this.moviesServices
-      .trendMovies()
+      .mostLiked()
       .pipe(take(1))
       .subscribe({
         next: (movies) => {
-          this.movies = movies
-            .sort((a, b) => {
-              if (a.likes !== b.likes) {
-                return b.likes - a.likes;
-              }
-              return a.position + 1 - (b.position + 1);
-            })
-            .map((m, index) => ({
-              ...m,
-              position: index + 1,
-            }));
+          this.movies = movies;
         },
         error: (_) => {},
       });

@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { AccountService } from './account.services';
 import { Movie } from '../movie/movie.model';
 import { MovieApi } from './models/movie.model';
+import { MovieMostLikedApi } from './models/movie-most-liked-api';
 
 const TMDB_IMG_ROOT_PATH = 'https://image.tmdb.org/t/p/w500';
 
@@ -59,5 +60,30 @@ export class MoviesService {
         },
       }
     );
+  }
+
+  mostLiked() {
+    return this.http
+      .get<MovieMostLikedApi[]>(`${environment.apiUrl}/movies/most-liked`, {
+        headers: {
+          Authorization: `Bearer ${this.accountService.userValue?.token}`,
+        },
+      })
+      .pipe(
+        map((response) => {
+          return response.map(
+            (m, index) =>
+              ({
+                id: m.id,
+                position: index + 1,
+                title: m.tmdb_obj?.title,
+                likes: m.likes,
+                isLiked: m.userLiked,
+                tmdb_id: m.tmdb_id,
+                imagePath: `${TMDB_IMG_ROOT_PATH}${m.tmdb_obj?.poster_path}`,
+              } as Movie)
+          );
+        })
+      );
   }
 }
