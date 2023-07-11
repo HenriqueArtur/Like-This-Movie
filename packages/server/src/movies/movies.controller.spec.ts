@@ -60,6 +60,7 @@ describe('MoviesController', () => {
         id: faker.database.mongodbObjectId(),
         tmdb_id: ml.id,
         likes: faker.number.int(100),
+        tmdb_obj: TmdbMovieDtoMock(),
       }));
       const userLikes = [
         {
@@ -93,9 +94,7 @@ describe('MoviesController', () => {
         tmdBrTrendPage1,
       );
       expect(tmdbDomainService.formatToResponse).toHaveBeenCalledWith(top10);
-      expect(moviesService.findOrCreateByTmdbIds).toHaveBeenCalledWith(
-        top10Formatted.map((m) => m.id),
-      );
+      expect(moviesService.findOrCreateByTmdbIds).toHaveBeenCalledWith(top10);
       expect(usersLikesService.findBy).toHaveBeenCalledWith(
         userId,
         top10Formatted.map((m) => m.id),
@@ -141,6 +140,7 @@ describe('MoviesController', () => {
         id: faker.database.mongodbObjectId(),
         likes: 1,
         tmdb_id: tmdbId,
+        tmdb_obj: TmdbMovieDtoMock(),
       });
       jest.spyOn(res, 'status').mockReturnValue(res as any);
 
@@ -169,6 +169,7 @@ describe('MoviesController', () => {
         id: faker.database.mongodbObjectId(),
         likes: 1,
         tmdb_id: tmdbId,
+        tmdb_obj: TmdbMovieDtoMock(),
       });
       jest.spyOn(res, 'status').mockReturnValue(res as any);
 

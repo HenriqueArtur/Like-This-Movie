@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { MovieModel } from '../models/movie.model';
 import { Movie } from '../dto/movie.dto';
+import { TmdbMovieDto } from '../dto/tmdb-movie.dto';
 
 @Injectable()
 export class MoviesMongoService {
@@ -10,7 +11,8 @@ export class MoviesMongoService {
     @InjectModel('Movie') private readonly movieModel: Model<MovieModel>,
   ) {}
 
-  async findOrCreateByTmdbIds(tmdbIds: number[]): Promise<Movie[]> {
+  async findOrCreateByTmdbIds(tmdbMovies: TmdbMovieDto[]): Promise<Movie[]> {
+    const tmdbIds = tmdbMovies.map((m) => m.id);
     const existingMovies = await this.movieModel.find({
       tmdb_id: { $in: tmdbIds },
     });
@@ -21,6 +23,7 @@ export class MoviesMongoService {
         this.movieModel.create({
           tmdb_id,
           likes: 0,
+          tmdb_obj: tmdbMovies.find((m) => m.id == tmdb_id),
         }),
       );
     const newMovies = await Promise.all(missingTmdbIdsPromise);
@@ -28,6 +31,7 @@ export class MoviesMongoService {
       id: movieMongo.id,
       tmdb_id: movieMongo.tmdb_id,
       likes: movieMongo.likes,
+      tmdb_obj: movieMongo.tmdb_obj,
     }));
   }
 
@@ -42,6 +46,7 @@ export class MoviesMongoService {
       id: movieDoc.id,
       likes: movieDoc.likes,
       tmdb_id: movieDoc.tmdb_id,
+      tmdb_obj: movieDoc.tmdb_obj,
     };
   }
 }

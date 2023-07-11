@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { MoviesMongoService } from './movies-mongo.service';
 import { MovieModel } from '../models/movie.model';
 import { faker } from '@faker-js/faker';
+import { TmdbMovieDtoMock } from '../mocks/tmdb-movie.dto.mock';
 
 describe('MoviesMongoService', () => {
   let service: MoviesMongoService;
@@ -32,40 +33,66 @@ describe('MoviesMongoService', () => {
 
   describe('findOrCreateByTmdbIds', () => {
     it('should find existing movies and create new movies', async () => {
+      const tmdbMoviesMocks = Array.from({ length: 3 }, () =>
+        TmdbMovieDtoMock(),
+      );
       const idsMock = [
         faker.number.int(),
         faker.number.int(),
         faker.number.int(),
       ];
-      const tmdbMockIds = [
-        faker.number.int(),
-        faker.number.int(),
-        faker.number.int(),
-      ];
       const existingMovies = [
-        { id: idsMock[0], tmdb_id: tmdbMockIds[0], likes: 5 },
-        { id: idsMock[1], tmdb_id: tmdbMockIds[1], likes: 10 },
+        {
+          id: idsMock[0],
+          tmdb_id: tmdbMoviesMocks[0].id,
+          likes: 5,
+          tmdb_obj: tmdbMoviesMocks[0],
+        },
+        {
+          id: idsMock[1],
+          tmdb_id: tmdbMoviesMocks[1].id,
+          likes: 10,
+          tmdb_obj: tmdbMoviesMocks[1],
+        },
       ];
-      const tmdbIds: number[] = tmdbMockIds;
 
       jest.spyOn(model, 'find').mockResolvedValue(existingMovies);
       jest.spyOn(model, 'create').mockResolvedValueOnce({
         id: idsMock[2],
-        tmdb_id: tmdbMockIds[2],
+        tmdb_id: tmdbMoviesMocks[2].id,
         likes: 0,
+        tmdb_obj: tmdbMoviesMocks[2],
       } as any);
 
-      const result = await service.findOrCreateByTmdbIds(tmdbIds);
+      const result = await service.findOrCreateByTmdbIds(tmdbMoviesMocks);
 
-      expect(model.find).toHaveBeenCalledWith({ tmdb_id: { $in: tmdbIds } });
+      expect(model.find).toHaveBeenCalledWith({
+        tmdb_id: { $in: tmdbMoviesMocks.map((m) => m.id) },
+      });
       expect(model.create).toHaveBeenCalledWith({
-        tmdb_id: tmdbMockIds[2],
+        tmdb_id: tmdbMoviesMocks[2].id,
         likes: 0,
+        tmdb_obj: tmdbMoviesMocks[2],
       });
       expect(result).toEqual([
-        { id: idsMock[0], tmdb_id: tmdbMockIds[0], likes: 5 },
-        { id: idsMock[1], tmdb_id: tmdbMockIds[1], likes: 10 },
-        { id: idsMock[2], tmdb_id: tmdbMockIds[2], likes: 0 },
+        {
+          id: idsMock[0],
+          tmdb_id: tmdbMoviesMocks[0].id,
+          likes: 5,
+          tmdb_obj: tmdbMoviesMocks[0],
+        },
+        {
+          id: idsMock[1],
+          tmdb_id: tmdbMoviesMocks[1].id,
+          likes: 10,
+          tmdb_obj: tmdbMoviesMocks[1],
+        },
+        {
+          id: idsMock[2],
+          tmdb_id: tmdbMoviesMocks[2].id,
+          likes: 0,
+          tmdb_obj: tmdbMoviesMocks[2],
+        },
       ]);
     });
   });

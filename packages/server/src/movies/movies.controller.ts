@@ -41,7 +41,7 @@ export class MoviesController {
     const top10fieldsFormatted = this.tmdbDomainService.formatToResponse(top10);
     const idsToFetch = top10fieldsFormatted.map((m) => m.id);
     const [moviesLike, userLikes] = await Promise.all([
-      this.moviesService.findOrCreateByTmdbIds(idsToFetch),
+      this.moviesService.findOrCreateByTmdbIds(top10),
       this.usersLikesService.findBy(userId, idsToFetch),
     ]);
     const userLikesIds = userLikes.map((l) => l.tmdb_id);
