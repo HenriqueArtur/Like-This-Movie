@@ -15,6 +15,7 @@ export class AuthController {
   async register(@Body() RegisterDTO: RegisterDto) {
     const user = await this.userService.create(RegisterDTO);
     const payload = {
+      id: user.id,
       login: user.login,
     };
     const token = await this.authService.signPayload(payload);
@@ -25,6 +26,7 @@ export class AuthController {
   async login(@Body() UserDTO: LoginDto) {
     const user = await this.userService.findByLogin(UserDTO);
     const payload = {
+      id: user.id,
       login: user.login,
     };
     const token = await this.authService.signPayload(payload);

@@ -1,0 +1,26 @@
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" opened>
+    <div class="drawer-space">
+      <div class="full-w">
+        <h1 class="header-title">
+          like this movie
+        </h1>
+        <button mat-flat-button [routerLink]="['/movies/pt-BR-trending']" routerLinkActive="mat-accent">
+          <mat-icon>trending_up</mat-icon>
+          Em alta
+        </button>
+        <button mat-flat-button [routerLink]="['/movies/most-liked']" routerLinkActive="mat-accent">
+          <mat-icon>favorite_border</mat-icon>
+          Mais curtidos
+        </button>
+      </div>
+      <button mat-flat-button class="exit" (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        Sair
+      </button>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <ng-content></ng-content>
+  </mat-drawer-content>
+</mat-drawer-container>

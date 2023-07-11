@@ -43,6 +43,7 @@ describe('AuthController', () => {
       expect(userService.create).toHaveBeenCalledWith(registerDto);
       expect(authService.signPayload).toHaveBeenCalledTimes(1);
       expect(authService.signPayload).toHaveBeenCalledWith({
+        id,
         login,
       });
       expect(result).toEqual({ user: createdUser, token });
@@ -75,6 +76,7 @@ describe('AuthController', () => {
       expect(userService.findByLogin).toHaveBeenCalledWith(loginDto);
       expect(authService.signPayload).toHaveBeenCalledTimes(1);
       expect(authService.signPayload).toHaveBeenCalledWith({
+        id,
         login,
       });
       expect(result).toEqual({ user, token });

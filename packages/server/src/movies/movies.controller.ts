@@ -57,7 +57,7 @@ export class MoviesController {
     @Param('tmdb_id') tmdb_id: number,
   ) {
     const userId = req.user.id;
-    const like = await this.usersLikesService.findByTmdbId(tmdb_id);
+    const like = await this.usersLikesService.findByTmdbId(userId, tmdb_id);
     if (!like) {
       const newLike = await this.usersLikesService.create(userId, tmdb_id);
       await this.moviesService.updateLikes(tmdb_id);

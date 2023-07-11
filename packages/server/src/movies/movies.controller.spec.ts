@@ -146,7 +146,10 @@ describe('MoviesController', () => {
 
       await controller.toggleLike(req, res as any, tmdbId);
 
-      expect(usersLikesService.findByTmdbId).toHaveBeenCalledWith(tmdbId);
+      expect(usersLikesService.findByTmdbId).toHaveBeenCalledWith(
+        userId,
+        tmdbId,
+      );
       expect(usersLikesService.create).toHaveBeenCalledWith(userId, tmdbId);
       expect(moviesService.updateLikes).toHaveBeenCalledWith(tmdbId);
       expect(res.status).toHaveBeenCalledWith(HttpStatus.CREATED);
@@ -171,7 +174,10 @@ describe('MoviesController', () => {
 
       await controller.toggleLike(req, res as any, tmdbId);
 
-      expect(usersLikesService.findByTmdbId).toHaveBeenCalledWith(tmdbId);
+      expect(usersLikesService.findByTmdbId).toHaveBeenCalledWith(
+        userId,
+        tmdbId,
+      );
       expect(usersLikesService.deleteByTmdbId).toHaveBeenCalledWith(tmdbId);
       expect(moviesService.updateLikes).toHaveBeenCalledWith(
         tmdbId,
