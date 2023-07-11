@@ -41,6 +41,14 @@ export class MoviesService {
       );
   }
 
+  mostTrended() {
+    return this.http.get(`${environment.apiUrl}/movies/most-trended`).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
   like(tmdb_id: number) {
     return this.http.post<null>(
       `${environment.apiUrl}/movies/toggle-like/${tmdb_id}`,

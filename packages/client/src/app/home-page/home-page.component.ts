@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
 import { AccountService } from '../_services/account.services';
+import { MoviesService } from '../_services/movies.services';
 
 @Component({
   selector: 'app-home-page',
@@ -9,14 +10,16 @@ import { AccountService } from '../_services/account.services';
   styleUrls: ['./home-page.component.sass'],
 })
 export class HomePageComponent {
-  linearGradient(arg0: any): any {
-    throw new Error('Method not implemented.');
-  }
   public loginValid = true;
   public login = '';
   public password = '';
+  public homeBanner = '';
 
-  constructor(private router: Router, private accountService: AccountService) {}
+  constructor(
+    private router: Router,
+    private accountService: AccountService,
+    private moviesServices: MoviesService
+  ) {}
 
   public ngOnInit(): void {
     const user = this.accountService.userValue;
@@ -24,6 +27,15 @@ export class HomePageComponent {
       this.router.navigate(['/movies/pt-BR-trending']);
       return;
     }
+    this.moviesServices
+      .mostTrended()
+      .pipe(take(1))
+      .subscribe({
+        next: (mostTrendedObj: any) => {
+          this.homeBanner = `linear-gradient(to bottom, rgba(255,255,255,0.8) 20%, rgba(255,255,255,1)),url(https://image.tmdb.org/t/p/original/${mostTrendedObj.backdrop_path}`;
+        },
+        error: (err) => console.error(err),
+      });
   }
 
   public onSubmit(): void {
