@@ -24,6 +24,14 @@ export class MoviesController {
     private usersLikesService: UsersLikesMongoService,
   ) {}
 
+  @Get('/most-trended')
+  async mostTrended() {
+    const tmdBrTrendPage1 = await this.tmdbApiService.trendingMovies();
+    const [mostTrended] =
+      this.tmdbDomainService.get10MostPopular(tmdBrTrendPage1);
+    return mostTrended;
+  }
+
   @UseGuards(AuthGuard('jwt'))
   @Get('/')
   async fetchTop10(@Request() req: any) {
