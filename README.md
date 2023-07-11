@@ -124,10 +124,19 @@ Adjust any configuration settings in the `packages/client/src/environments` dire
 
 To ensure the reliability and correctness of the project, tests have been implemented using the Jest testing framework.
 
-To run tests for the server application:
+To run tests for the **server** application:
 
 ```bash
 cd packages/server
+npm run test
+# or
+yarn test
+```
+
+To run tests for the **client** application:
+
+```bash
+cd packages/client
 npm run test
 # or
 yarn test
