@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
 import { AccountService } from '../_services/account.services';
@@ -9,6 +9,9 @@ import { AccountService } from '../_services/account.services';
   styleUrls: ['./home-page.component.sass'],
 })
 export class HomePageComponent {
+  linearGradient(arg0: any): any {
+    throw new Error('Method not implemented.');
+  }
   public loginValid = true;
   public login = '';
   public password = '';
