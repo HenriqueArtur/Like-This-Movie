@@ -154,4 +154,22 @@ describe('MoviesMongoService', () => {
       });
     });
   });
+
+  describe('fetchTop10ByLikes', () => {
+    it('should fetch the top 10 movies by likes', async () => {
+      jest.spyOn(model, 'find').mockReturnValue({
+        sort: jest.fn().mockReturnValue({
+          limit: jest.fn().mockResolvedValue([]),
+        }),
+      } as any);
+
+      await service.fetchTop10ByLikes();
+      expect(model.find).toHaveBeenCalledWith({});
+      expect(model.find().sort).toHaveBeenCalledWith({
+        likes: -1,
+        'tmdb_obj.popularity': -1,
+      });
+      expect(model.find().sort().limit).toHaveBeenCalledWith(10);
+    });
+  });
 });

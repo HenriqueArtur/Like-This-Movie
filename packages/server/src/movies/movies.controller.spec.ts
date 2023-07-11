@@ -10,6 +10,8 @@ import { TmdbMovieToAppDtoMock } from './mocks/tmdb-movie-to-app.dto.mock';
 import { faker } from '@faker-js/faker';
 import { getModelToken } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { Movie } from './dto/movie.dto';
+import { UsersLikesDto } from './dto/user-like.dto';
 
 describe('MoviesController', () => {
   let controller: MoviesController;
@@ -130,6 +132,60 @@ describe('MoviesController', () => {
             userLiked: !!userLikesIds.includes(movieInApp.tmdb_id),
           };
         }),
+      );
+    });
+  });
+
+  describe('fetchTop10MostLiked', () => {
+    it('should fetch the top 10 most liked movies', async () => {
+      const userId = faker.database.mongodbObjectId();
+      const tmdbMocks = Array.from({ length: 10 }, () => TmdbMovieDtoMock());
+      const mockMovies: Movie[] = tmdbMocks
+        .map((m) => ({
+          id: faker.database.mongodbObjectId(),
+          tmdb_id: m.id,
+          likes: faker.number.int(100),
+          tmdb_obj: m,
+        }))
+        .sort((a, b) => {
+          if (a.likes > b.likes) return -1;
+          if (a.likes < b.likes) return 1;
+          if (a.tmdb_obj.popularity > b.tmdb_obj.popularity) return -1;
+          if (a.tmdb_obj.popularity < b.tmdb_obj.popularity) return 1;
+          return 0;
+        });
+
+      const mockUserLikes: UsersLikesDto[] = [
+        {
+          id: faker.database.mongodbObjectId(),
+          user_id: userId,
+          tmdb_id: mockMovies[0].tmdb_id,
+        },
+        {
+          id: faker.database.mongodbObjectId(),
+          user_id: userId,
+          tmdb_id: mockMovies[1].tmdb_id,
+        },
+      ];
+
+      jest
+        .spyOn(moviesService, 'fetchTop10ByLikes')
+        .mockResolvedValue(mockMovies);
+      jest.spyOn(usersLikesService, 'findBy').mockResolvedValue(mockUserLikes);
+
+      const mockRequest = { user: { id: userId } };
+      const result = await controller.fetchTop10MostLiked(mockRequest);
+
+      expect(moviesService.fetchTop10ByLikes).toHaveBeenCalled();
+      expect(usersLikesService.findBy).toHaveBeenCalledWith(
+        userId,
+        mockMovies.map((m) => m.tmdb_id),
+      );
+      expect(result).toEqual(
+        mockMovies.map((m) => ({
+          ...m,
+          userLiked: mockUserLikes.some((ul) => ul.tmdb_id === m.tmdb_id),
+        })),
       );
     });
   });
