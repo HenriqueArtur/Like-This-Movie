@@ -8,10 +8,11 @@ The project is an application that allows registered users to connect to the TMD
 
 ## ✨ Features
 
-    ✅ User registration: Users can create accounts to access the app's features.
-    🎥 TMDB API integration: The app connects to the TMDB API to fetch trending movies.
-    ❤️ Like functionality: Users can like movies to express their preferences.
-    🏆 Most liked movies page: A separate page displays the movies with the highest number of likes within the app.
+- ✅ **User registration**: Users can create accounts to access the app's features.
+- 🎥 **TMDB API integration**: The app connects to the TMDB API to fetch trending movies.
+- ❤️ **Like functionality**: Users can like movies to express their preferences.
+- 🏆**Most liked movies page**: A separate page displays the movies with the highest number of likes within the app.
+- 🔒 **JWT authentication**: The app incorporates JWT (JSON Web Token) authentication for secure user authentication and authorization. 
 
 ## 👩‍💻 Technologies Used
 
