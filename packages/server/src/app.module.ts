@@ -20,7 +20,7 @@ import { MoviesModule } from './movies/movies.module';
             process.env.MONGO_CONNECTION,
           ...(process.env.NODE_ENV == 'DEV'
             ? { dbName: configService.get<string>(`MONGO_DB_NAME`) }
-            : {}),
+            : { dbName: configService.get<string>(`MONGO_DB_NAME`) }),
         };
       },
       inject: [ConfigService],
