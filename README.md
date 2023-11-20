@@ -2,6 +2,11 @@
 
 This project was created as a job test for Profectum + Unimed companies, showcasing my skills and expertise.
 
+### **Links**
+🚀 [ltm-ts.henriqueartur.com](ltm-ts.henriqueartur.com)
+
+🐳 [Server Docker Image](https://hub.docker.com/repository/docker/henrique0artur/like-this-movie-ts/general)
+
 ## 📝 Project Description
 
 The project is an application that allows registered users to connect to the TMDB (The Movie Database) API to access trending movies. Users can like movies and view a separate page displaying the most liked movies within the app. The app provides a convenient way for users to discover popular movies and keep track of their preferences.
